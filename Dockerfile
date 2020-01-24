@@ -19,10 +19,13 @@ if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
 if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
 rm -r /root/.cache
 
-RUN mkdir package/
-COPY package/ package/
-RUN tar -xzf package/liquibase-3.8.5.tar.gz
 
-RUN echo $PATH
+COPY . /liquibase-poc
+
+RUN mkdir package/
+RUN tar -xzf liquibase-poc/package/liquibase-3.8.5.tar.gz --directory package
 ENV PATH "$PATH:/package"
+RUN echo $PATH
+
+CMD python liquibase-poc/app.py
 

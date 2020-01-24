@@ -1,0 +1,26 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=liquibase
+      - MYSQL_PASSWORD=liquibase
+      - MYSQL_DATABASE=test
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  liquibase:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    environment:
+      - DB_URL=jdbc:mysql://localhost:3306/test
+      - DB_USERNAME=liquibase
+      - DB_PASSWORD=liquibase
+      - MYSQL_DRIVER=com.mysql.cj.jdbc.Driver
