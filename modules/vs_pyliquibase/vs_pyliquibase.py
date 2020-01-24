@@ -23,7 +23,6 @@ class VsPyLiquibase(object):
         :param username:
         :param password:
         :return:
-        TODO: fix cant locate driver error in liquibase container
         """
         cmd = f'liquibase --driver={driver} ' \
             f'--classpath=.{os.environ["CLASSPATH"]} ' \
