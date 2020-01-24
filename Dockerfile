@@ -1,31 +1,30 @@
 ### LINUX IMAGE
-FROM alpine:3.11
+FROM ubuntu:bionic
 
 ### 2. Get Java via the package manager
-RUN apk update \
-&& apk upgrade \
-&& apk add --no-cache bash \
-&& apk add --no-cache --virtual=build-dependencies unzip \
-&& apk add --no-cache curl \
-&& apk add --no-cache openjdk8-jre
+RUN apt-get -y update \
+&& apt-get -y upgrade \
+&& apt-get install -y --no-install-recommends apt-utils \
+&& apt-get install -y curl \
+&& apt-get install -y openjdk-8-jdk \
+
+### 2.5 Install JDBC driver for Liquibase to run
+&& apt-get install -y libmysql-java
 
 ### 3. Get Python, PIP
-
-RUN apk add --no-cache python3 \
-&& python3 -m ensurepip \
-&& pip3 install --upgrade pip setuptools \
-&& rm -r /usr/lib/python*/ensurepip && \
-if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
-if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-rm -r /root/.cache
-
+RUN apt-get install -y python3-pip python3-dev \
+  && cd /usr/local/bin \
+  && ln -s /usr/bin/python3 python \
+  && pip3 install --upgrade pip \
+&& apt-get clean
 
 COPY . /liquibase-poc
 
 RUN mkdir package/
 RUN tar -xzf liquibase-poc/package/liquibase-3.8.5.tar.gz --directory package
+
 ENV PATH "$PATH:/package"
-RUN echo $PATH
+ENV CLASSPATH "$CLASSPATH:/usr/share/java/mysql.jar"
 
 CMD python liquibase-poc/app.py
 
