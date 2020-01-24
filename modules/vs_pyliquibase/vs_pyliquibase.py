@@ -1,8 +1,8 @@
 """
 Wrapper around Liquibase
 
+TODO: Complete class methods for running liquibase migration
 Reference: https://www.liquibase.org/get_started/quickstart_lb.html
-TODO: Complete class
 """
 import os
 
@@ -22,10 +22,10 @@ class VsPyLiquibase(object):
         :param url: URL of DB connection
         :param username:
         :param password:
-        :return:
+        :return: None
         """
         cmd = f'liquibase --driver={driver} ' \
-            f'--classpath=.{os.environ["CLASSPATH"]} ' \
+            f'--classpath=../../../{os.environ["CLASSPATH"]} ' \
             f'--url={url} --changeLogFile=dbchangelog.sql ' \
             f'--username={username} --password={password} ' \
             f'--logLevel=debug ' \

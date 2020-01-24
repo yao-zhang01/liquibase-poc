@@ -20,7 +20,7 @@ services:
     depends_on:
       - mysql
     environment:
-      - DB_URL=jdbc:mysql://localhost:3306/test
+      - DB_URL=jdbc:mysql://mysql:3306/test
       - DB_USERNAME=liquibase
       - DB_PASSWORD=liquibase
       - MYSQL_DRIVER=com.mysql.cj.jdbc.Driver
