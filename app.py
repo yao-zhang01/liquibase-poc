@@ -1,7 +1,8 @@
 import os
-from modules import DBWrapper, VsPyLiquibase
+from modules import VsPyLiquibase
 
 def main():
+    # Generating change log for the very first time
     liquibase_wrapper = VsPyLiquibase()
     liquibase_wrapper._generate_change_log(
         driver=os.environ["MYSQL_DRIVER"],
@@ -9,6 +10,7 @@ def main():
         username=os.environ["DB_USERNAME"],
         password=os.environ["DB_PASSWORD"]
     )
+
     print('Hello liquibase app running')
 if __name__ == '__main__':
     main()

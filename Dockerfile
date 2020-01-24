@@ -7,7 +7,6 @@ RUN apt-get -y update \
 && apt-get install -y --no-install-recommends apt-utils \
 && apt-get install -y curl \
 && apt-get install -y openjdk-8-jdk \
-
 ### 2.5 Install JDBC driver for Liquibase to run
 && apt-get install -y libmysql-java
 

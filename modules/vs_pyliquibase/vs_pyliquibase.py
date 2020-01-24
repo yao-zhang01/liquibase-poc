@@ -1,5 +1,8 @@
 """
 Wrapper around Liquibase
+
+Reference: https://www.liquibase.org/get_started/quickstart_lb.html
+TODO: Complete class
 """
 import os
 
@@ -20,12 +23,22 @@ class VsPyLiquibase(object):
         :param username:
         :param password:
         :return:
+        TODO: fix cant locate driver error in liquibase container
         """
         cmd = f'liquibase --driver={driver} ' \
-            f'--classpath={os.environ["CLASSPATH"]} ' \
+            f'--classpath=.{os.environ["CLASSPATH"]} ' \
             f'--url={url} --changeLogFile=dbchangelog.sql ' \
             f'--username={username} --password={password} ' \
+            f'--logLevel=debug ' \
             f'generateChangeLog'
-        print(cmd)
+        print(f'Running generateChangeLog command: {cmd}')
         os.system(cmd)
 
+    def _add_change_set(self):
+        pass
+
+    def _run_change_set(self):
+        pass
+
+    def _get_db_status(self):
+        pass
